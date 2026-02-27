@@ -2,8 +2,11 @@ const express = require("express")
 const app = express()
 const noteModel = require("./model/notes.model")
 const cors = require('cors')
+// agar hamko root root directory se path nhii dena ho 
+const path = require("path")
 app.use(cors())
 app.use(express.json())
+app.use(express.static("./public"))
 
 
 // post 
@@ -47,6 +50,13 @@ app.patch("/api/notes/:id", async (req,res)=>{
     res.status(200).json({
         message: "note updated "
     })
+})
+
+// middleware
+app.use('*name',(req ,res)=>{
+    // res.send("this is wild card ")
+
+    res.sendFile(path.join(__dirname, "..","/public/index.html"))
 })
 
 module.exports=app
